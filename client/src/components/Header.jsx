@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
-import { List, X, Moon, Sun, MagnifyingGlass } from 'phosphor-react'
+const X = React.lazy(() => import('phosphor-react/src/icons/X'));
+const List = React.lazy(() => import('phosphor-react/src/icons/List'));
+const Moon = React.lazy(() => import('phosphor-react/src/icons/Moon'));
+const Sun = React.lazy(() => import('phosphor-react/src/icons/Sun'));
+const MagnifyingGlass = React.lazy(() => import('phosphor-react/src/icons/MagnifyingGlass'));
 import { useTheme } from '../context/ThemeContext'
 
 function Header() {
@@ -47,16 +51,20 @@ function Header() {
         <div className="flex items-center space-x-4 ml-auto md:ml-0">
           <button
             onClick={toggleDarkMode}
+            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
+
           <button
             onClick={toggleMenu}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             className="md:hidden text-gray-800 dark:text-white focus:outline-none"
           >
             {menuOpen ? <X size={24} /> : <List size={24} />}
           </button>
+
         </div>
       </div>
 
