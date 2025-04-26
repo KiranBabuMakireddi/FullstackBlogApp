@@ -1,29 +1,27 @@
 import User from "../models/usermodel.js";
 import bcrypt from 'bcrypt';
-import { errorHandler } from "../utils/error.js"; 
+import jwt from 'jsonwebtoken';
+import { errorHandler } from "../utils/error.js";
 
+// SIGN UP
 export const signup = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
-    // Validate input
     if (!username?.trim() || !email?.trim() || !password?.trim()) {
-      return next(errorHandler(400, 'All fields are required')); // 400 Bad Request
+      return next(errorHandler(400, 'All fields are required'));
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({
-      $or: [{ email }, { username }],
+      $or: [{ email: email.toLowerCase() }, { username }],
     });
 
     if (existingUser) {
-      return next(errorHandler(409, 'Username or Email already exists')); // 409 Conflict
+      return next(errorHandler(409, 'Username or Email already exists'));
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
     const newUser = new User({
       username: username.trim(),
       email: email.trim().toLowerCase(),
@@ -31,9 +29,56 @@ export const signup = async (req, res, next) => {
     });
 
     await newUser.save();
-    res.status(201 ).json({ message: "Signup successful" }); // 201 Created
 
+    res.status(201).json({ message: 'Signup successful' });
   } catch (error) {
-    next(error); // Pass to global error handler
+    next(error);
+  }
+};
+
+// SIGN IN with COOKIE
+export const signin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email?.trim() || !password?.trim()) {
+      return next(errorHandler(400, 'Email and password are required'));
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      return next(errorHandler(404, 'User not found'));
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return next(errorHandler(401, 'Invalid credentials'));
+    }
+
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res
+      .cookie('access_token', token, {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .status(200)
+      .json({
+        message: 'Signin successful',
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          createdAt:user.createdAt,
+          updatedAt:user.updatedAt,
+        },
+      });
+  } catch (error) {
+    next(error);
   }
 };
