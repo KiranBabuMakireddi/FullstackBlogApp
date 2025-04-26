@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 
 // Lazy load icons
 const Eye = React.lazy(() => import('phosphor-react/src/icons/Eye'));
@@ -33,15 +35,18 @@ const FallbackLoading = () => (
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: '', password: '' });
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading } = useSelector((state) => state.user);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch(signInStart());
 
     try {
       const res = await axios.post(
@@ -49,22 +54,24 @@ const SignIn = () => {
         form,
         {
           headers: { 'Content-Type': 'application/json' },
-          withCredentials: true, // Enable cookie support
+          withCredentials: true, // to allow cookie
         }
       );
+
+      dispatch(signInSuccess(res.data.user));
 
       const { toast } = await import('react-toastify');
       await import('react-toastify/dist/ReactToastify.css');
       toast.success('Signin successful!');
+
       setTimeout(() => navigate('/home'), 1500);
     } catch (error) {
       const msg = error.response?.data?.message || 'Signin failed. Please try again.';
+      dispatch(signInFailure(msg));
       const { toast } = await import('react-toastify');
       await import('react-toastify/dist/ReactToastify.css');
       toast.error(msg);
-      console.error('Signin error:', msg);
-    } finally {
-      setLoading(false);
+      // console.error('Signin error:', msg);
     }
   };
 
