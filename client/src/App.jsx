@@ -14,11 +14,12 @@ function App() {
       <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         <Route path="/" element={<Layout><SignUp /></Layout>} />
+        <Route path="/signup" element={<Layout><SignUp /></Layout>} />
+        <Route path="/signin" element={<Layout><SignIn /></Layout>} />
         <Route path="/home" element={<Layout><Home /></Layout>} />
         <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
         <Route path="/about" element={<Layout><About /></Layout>} />
         <Route path="/projects" element={<Layout><Projects /></Layout>} />
-        <Route path="/signin" element={<Layout><SignIn /></Layout>} />
       </Routes>
     </BrowserRouter>
   );
