@@ -142,10 +142,7 @@ const SignUp = () => {
           <span className="mx-2 text-sm text-gray-500 dark:text-gray-400">or</span>
           <hr className="flex-grow border-gray-300 dark:border-gray-600" />
         </div>
-
-        <GoogleButton onClick={handleGoogleSignIn} disabled={loading} className="relative">
-          {renderLoadingButton('Continue with Google')}
-        </GoogleButton>
+        <GoogleButton/>
       </AuthLayout>
     </React.Suspense>
   );
