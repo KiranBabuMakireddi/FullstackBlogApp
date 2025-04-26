@@ -125,7 +125,7 @@ const SignUp = () => {
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 bottom-3 p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"
+              className="absolute right-3 bottom-[2px] p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"
               style={{ width: '40px', height: '40px' }}
             >
               {showPassword ? <EyeSlash size={24} /> : <Eye size={24} />}
