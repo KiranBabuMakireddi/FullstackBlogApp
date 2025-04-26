@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useTheme } from '../context/ThemeContext';
+
+// Lazy import icons
 const X = React.lazy(() => import('phosphor-react/src/icons/X'));
 const List = React.lazy(() => import('phosphor-react/src/icons/List'));
 const Moon = React.lazy(() => import('phosphor-react/src/icons/Moon'));
 const Sun = React.lazy(() => import('phosphor-react/src/icons/Sun'));
 const MagnifyingGlass = React.lazy(() => import('phosphor-react/src/icons/MagnifyingGlass'));
-import { useTheme } from '../context/ThemeContext'
+const UserCircle = React.lazy(() => import('phosphor-react/src/icons/UserCircle'));
 
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [search, setSearch] = useState('')
-  const { darkMode, toggleDarkMode } = useTheme()
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const { darkMode, toggleDarkMode } = useTheme();
+  const { currentUser } = useSelector(state => state.user);
+  const path = useLocation().pathname;
 
-  const toggleMenu = () => setMenuOpen(!menuOpen)
-  const closeMenu = () => setMenuOpen(false)
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const closeDropdown = () => setDropdownOpen(false);
 
   return (
     <header className="sticky top-0 bg-white dark:bg-gray-800 shadow-md z-50">
@@ -47,8 +56,72 @@ function Header() {
           <Link to="/about" className="nav-link">About</Link>
         </nav>
 
-        {/* Right controls */}
-        <div className="flex items-center space-x-4 ml-auto md:ml-0">
+        {/* Right Controls */}
+        <div className="relative flex items-center space-x-4 ml-auto md:ml-0">
+          {path === '/signin' || path === '/signup' || path === '/' ? (
+            <Link to="/signin">
+              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                Sign In
+              </button>
+            </Link>
+          ) : currentUser ? (
+            <div className="relative">
+              <button
+                onClick={toggleDropdown}
+                className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center overflow-hidden focus:outline-none"
+              >
+                {currentUser.profilePicture ? (
+                  <img
+                    src={currentUser.profilePicture}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <UserCircle size={32} className="text-gray-600 dark:text-gray-300" />
+                )}
+              </button>
+
+              {/* Dropdown */}
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-700 rounded-md shadow-lg overflow-hidden z-50">
+                  {/* User Info */}
+                  <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                    <p className="text-sm font-semibold text-gray-800 dark:text-white">
+                      {currentUser?.username || 'Username'}
+                    </p>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
+                      {currentUser?.email || 'user@example.com'}
+                    </p>
+                  </div>
+                  <hr/>
+
+                  {/* Profile Link */}
+                  <Link
+                    to="/dashboard?tab=profile"
+                    className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
+                    onClick={closeDropdown}
+                  >
+                    Profile
+                  </Link>
+                  <hr/>
+                  {/* Logout Button */}
+                  <button
+                    onClick={() => {
+                      // Logout logic here
+                      console.log('Logout clicked');
+                      closeDropdown();
+                    }}
+                    className="w-full text-left px-4 py-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+
+            </div>
+          ) : null}
+
+          {/* Dark Mode Button */}
           <button
             onClick={toggleDarkMode}
             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -57,6 +130,7 @@ function Header() {
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -64,7 +138,6 @@ function Header() {
           >
             {menuOpen ? <X size={24} /> : <List size={24} />}
           </button>
-
         </div>
       </div>
 
@@ -93,7 +166,6 @@ function Header() {
         </div>
       )}
     </header>
-  )
+  );
 }
-
-export default Header
+export default Header;
