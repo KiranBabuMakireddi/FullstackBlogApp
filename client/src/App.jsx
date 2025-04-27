@@ -32,8 +32,12 @@ function App() {
           />
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>
-          <Route path='/create-post' element={<CreatePost />} />
-          <Route path='/update-post/:postId' element={<UpdatePost />} />
+          <Route path='/create-post' element={<Layout>
+            <CreatePost />
+          </Layout>} />
+          <Route path='/update-post/:postId' element={<Layout>
+            <UpdatePost />
+            </Layout>} />
         </Route>
         <Route path="/about" element={<Layout><About /></Layout>} />
         <Route path="/projects" element={<Layout><Projects /></Layout>} />

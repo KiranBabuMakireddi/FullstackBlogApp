@@ -31,7 +31,7 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto min-h-screen">
+    <div className="p-4 max-w-4xl mx-auto min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
       <h1 className="text-center text-3xl font-bold my-7">Create a Post</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         
@@ -43,12 +43,12 @@ export default function CreatePost() {
             placeholder="Title"
             required
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            className="flex-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
           />
           <select
             required
             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-            className="flex-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
           >
             <option value="">Select a category</option>
             <option value="javascript">JavaScript</option>

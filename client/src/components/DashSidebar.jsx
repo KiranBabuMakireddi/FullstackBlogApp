@@ -50,7 +50,7 @@ export default function DashSidebar() {
       </div>
 
       {/* Sidebar */}
-      <div className={`fixed top-20 lg:top-0 left-0 h-full w-64 bg-white dark:bg-gray-950 border-r dark:border-gray-800 transform transition-transform duration-300 ease-in-out z-30
+      <div className={`fixed top-20 md:top-0 left-0 h-full w-64 bg-white dark:bg-gray-950 border-r dark:border-gray-800 transform transition-transform duration-300 ease-in-out z-30
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 md:w-56`}>
         
         {/* Top bar inside Sidebar (only mobile) */}

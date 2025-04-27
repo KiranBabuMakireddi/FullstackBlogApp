@@ -68,7 +68,7 @@ export default function DashPosts() {
       {currentUser.isAdmin && userPosts.length > 0 ? (
         <>
           <table className="w-full table-auto rounded-lg overflow-hidden shadow-lg border dark:border-slate-700">
-            <thead className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+            <thead className="bg-slate-200 dark:bg-blue-600 text-slate-700 dark:text-slate-200">
               <tr>
                 {['Date updated', 'Post image', 'Post title', 'Category', 'Delete', 'Edit'].map((head) => (
                   <th key={head} className="p-3 text-left text-sm uppercase tracking-wide">{head}</th>
