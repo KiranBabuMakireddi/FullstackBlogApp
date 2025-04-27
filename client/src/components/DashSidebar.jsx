@@ -44,7 +44,7 @@ export default function DashSidebar() {
       <div className="md:hidden p-4">
         <button onClick={() => setIsOpen(true)}>
           <Suspense fallback={<div>...</div>}>
-            <List size={32} />
+            <List size={32} color='#22af95'/>
           </Suspense>
         </button>
       </div>
