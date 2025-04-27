@@ -40,7 +40,7 @@ function Header() {
       }
     };
   return (
-    <header className="sticky top-0 bg-white dark:bg-gray-800 shadow-md z-50">
+    <header className="sticky top-0 bg-white dark:bg-gray-950 shadow-md z-50">
       <div className="container mx-auto flex flex-wrap items-center justify-between p-4 gap-4">
         {/* Logo */}
         <div className="text-2xl font-bold text-gray-800 dark:text-white">
