@@ -1,8 +1,11 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'; // Import the plugin
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 
-// Lazy-load Phosphor icons
+// Extend dayjs with the relativeTime plugin
+dayjs.extend(relativeTime);
+
 const ThumbsUp = lazy(() => import('phosphor-react').then(m => ({ default: m.ThumbsUp })));
 
 export default function Comment({ comment, onLike, onEdit, onDelete }) {
@@ -63,7 +66,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
           <span className="font-bold text-xs truncate">
             {user.username ? `@${user.username}` : 'Anonymous user'}
           </span>
-          <span className="text-gray-500 text-xs">{dayjs(comment.createdAt).fromNow()}</span>
+          <span className="text-gray-500 text-xs">{dayjs(comment.createdAt).fromNow()}</span> {/* Should work now */}
         </div>
 
         {isEditing ? (
