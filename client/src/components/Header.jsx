@@ -182,7 +182,6 @@ export default function Header() {
       {[
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },
-        { name: "Projects", path: "/projects" },
       ].map((link) => (
         <Link
           key={link.path}

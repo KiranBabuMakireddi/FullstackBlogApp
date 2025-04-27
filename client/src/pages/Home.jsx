@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState, lazy, Suspense } from 'react';
 
 // Lazy load components
-// const CallToAction = lazy(() => import('../components/CallToAction'));
 const PostCard = lazy(() => import('../components/PostCard'));
 
 // Loading spinner
@@ -31,10 +30,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <div className="flex flex-col gap-6 p-6 sm:p-10 px-3 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold lg:text-6xl pt-10">Welcome to my Blog</h1>
-        <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+        <h1 className="text-4xl font-extrabold lg:text-6xl pt-10 text-gray-800 dark:text-white text-center">
+          Welcome to my Blog
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed text-center">
           Welcome to my blog! Here you'll find a wide range of articles, tutorials, and resources designed
           to help you grow as a developer. Whether you're interested in web development, software engineering,
           programming languages, or best practices in the tech industry, there's something here for everyone.
@@ -42,23 +43,19 @@ const Home = () => {
         </p>
         <Link
           to="/search"
-          className="text-sm sm:text-base text-teal-600 dark:text-teal-400 font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none w-max"
+          className="text-sm sm:text-base text-teal-600 dark:text-teal-400 font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none w-max mx-auto"
         >
           View all posts
         </Link>
-
-        {/* <div className="p-4 bg-amber-100 dark:bg-slate-700 rounded-lg shadow-sm">
-          <Suspense fallback={<LoadingIndicator />}>
-            <CallToAction />
-          </Suspense>
-        </div> */}
       </div>
 
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-6">
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-10">
         {posts.length > 0 && (
-          <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-semibold text-center">Recent Posts</h2>
-            <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-col gap-8">
+            <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100">
+              Recent Posts
+            </h2>
+            <div className="flex flex-wrap gap-6 justify-center">
               {posts.map((post) => (
                 <Suspense key={post._id} fallback={<LoadingIndicator />}>
                   <PostCard post={post} />
