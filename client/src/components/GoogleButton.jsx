@@ -29,7 +29,7 @@ const GoogleButton = () => {
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/home'); // or wherever you want to go after sign-in
+        navigate('/'); // or wherever you want to go after sign-in
       }
     } catch (err) {
       console.error('Google sign-in error:', err);

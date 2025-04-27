@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const User = lazy(() => import('phosphor-react').then(module => ({ default: module.User })));
 const SignOut = lazy(() => import('phosphor-react').then(module => ({ default: module.SignOut })));
@@ -13,7 +13,6 @@ const X = lazy(() => import('phosphor-react').then(module => ({ default: module.
 
 export default function DashSidebar() {
   const location = useLocation();
-  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [tab, setTab] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -25,10 +24,6 @@ export default function DashSidebar() {
       setTab(tabFromUrl);
     }
   }, [location.search]);
-
-  const handleSignout = async () => {
-    console.log('hii');
-  };
 
   const linkClasses = (isActive) =>
     `flex items-center gap-3 px-4 py-2 rounded-md transition-colors duration-200
@@ -121,17 +116,6 @@ export default function DashSidebar() {
                 </Link>
               </>
             )}
-
-            <button
-              onClick={() => {
-                handleSignout();
-                setIsOpen(false);
-              }}
-              className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors duration-200 hover:bg-blue-100 dark:hover:bg-blue-900 text-left w-full text-blue-700 dark:text-blue-400"
-            >
-              <SignOut size={20} />
-              <span>Sign Out</span>
-            </button>
           </Suspense>
         </div>
       </div>

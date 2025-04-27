@@ -58,13 +58,13 @@ const SignIn = () => {
         }
       );
 
-      dispatch(signInSuccess(res.data.user));
+      dispatch(signInSuccess(res.data));
       localStorage.setItem('user', JSON.stringify(res.data.user)); 
       const { toast } = await import('react-toastify');
       await import('react-toastify/dist/ReactToastify.css');
       toast.success('Signin successful!');
 
-      setTimeout(() => navigate('/home'), 1500);
+      setTimeout(() => navigate('/'), 1500);
     } catch (error) {
       const msg = error.response?.data?.message || 'Signin failed. Please try again.';
       dispatch(signInFailure(msg));
@@ -74,11 +74,6 @@ const SignIn = () => {
       // console.error('Signin error:', msg);
     }
   };
-
-  // const handleGoogleSignIn = () => {
-  //   console.log('Continue with Google clicked');
-  //   // Add Google sign-in logic here
-  // };
 
   const renderLoadingButton = (buttonText) => (
     <>
@@ -101,7 +96,7 @@ const SignIn = () => {
           <>
             Don&apos;t have an account?{' '}
             <Link
-              to="/"
+              to="/signup"
               className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
             >
               Sign Up
