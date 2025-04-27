@@ -67,7 +67,7 @@ export default function DashUsers() {
   };
 
   return (
-    <div className="w-full overflow-x-auto p-3 max-w-6xl mx-auto scrollbar scrollbar-track-gray-200 scrollbar-thumb-gray-400 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600">
+    <div className="w-full overflow-x-auto p-3 max-w-fu;; mx-auto scrollbar scrollbar-track-gray-200 scrollbar-thumb-gray-400 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600">
   {currentUser.isAdmin && users.length > 0 ? (
     <>
       <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
