@@ -59,7 +59,7 @@ const SignIn = () => {
       );
 
       dispatch(signInSuccess(res.data.user));
-
+      localStorage.setItem('user', JSON.stringify(res.data.user)); 
       const { toast } = await import('react-toastify');
       await import('react-toastify/dist/ReactToastify.css');
       toast.success('Signin successful!');

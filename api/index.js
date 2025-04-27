@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import UserRoutes from './routes/user.route.js';
 import AuthRoutes from './routes/auth.route.js';
 
@@ -10,7 +11,7 @@ const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
-
+app.use(cookieParser());
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
