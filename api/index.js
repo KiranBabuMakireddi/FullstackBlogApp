@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import UserRoutes from './routes/user.route.js';
 import AuthRoutes from './routes/auth.route.js';
-
+import postRoutes from './routes/post.route.js'
 dotenv.config();
 
 const app = express();
@@ -23,7 +23,7 @@ mongoose
 // Routes
 app.use('/api/user', UserRoutes);
 app.use('/api/auth', AuthRoutes);
-
+app.use('/api/post', postRoutes);
 // 404 Not Found Handler
 app.use((req, res, next) => {
   const error = new Error('Route not found');
